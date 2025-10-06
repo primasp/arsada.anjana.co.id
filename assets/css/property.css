@@ -1,0 +1,38 @@
+.sticky-sidebar {
+    position: sticky; /* Menempel di posisi saat scroll */
+    top: 80px; /* Jarak dari atas halaman */
+    z-index: 10; /* Pastikan di atas elemen lainnya */
+}
+
+#total_price {
+    text-align: center; /* Posisikan teks di tengah */
+    font-weight: bold; /* Jadikan teks tebal */
+    font-size: 1.2em; /* Ukuran teks lebih besar */
+    color: #4B0082; /* Warna teks, opsional */
+    background-color: #f8f9fa; /* Warna latar belakang, opsional */
+    border: 1px solid #ddd; /* Border opsional untuk tampilan rapi */
+    border-radius: 5px; /* Opsional: sudut melengkung */
+    padding: 10px; /* Opsional: ruang dalam */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Opsional: efek bayangan */
+}
+
+.blink-red {
+    animation: blink 1s infinite;
+    color: white !important;
+    background-color: red !important;
+    border-color: red !important;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+#all-transaksi-table thead th {
+  text-align: center;
+  vertical-align: middle;
+}
