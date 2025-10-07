@@ -3,6 +3,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['default_controller'] = 'ClientController';
 
+
+
+
+$route['admin/events'] = 'Admin/EventController/index';
+$route['admin/events/create'] = 'Admin/EventController/create';
+$route['admin/events/store'] = 'Admin/EventController/store';
+$route['admin/events/(:any)/edit'] = 'Admin/EventController/edit/$1';
+
+$route['admin/forms/section/store'] = 'Admin/FormBuilderController/store_section';
+$route['admin/forms/question/store'] = 'Admin/FormBuilderController/store_question';
+
+
+
+// $route['admin/events/edit'] = 'Admin/EventController/edit';
+
+$route['admin/events/(:any)/builder'] = 'Admin/FormBuilderController/index/$1';
+
+
+
 $route['Client'] = 'ClientController';
 $route['Login'] = 'AuthController';
 $route['Logout'] = 'AuthController/logout';

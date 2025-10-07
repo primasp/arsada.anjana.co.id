@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="<?= base_url(); ?>assets/img/favicon.png">
-    <title>Alma Property - Client View</title>
+    <title>Arsada 2025 - Client View</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
@@ -46,7 +46,7 @@
         <div class="header ">
             <div class="header-left w-auto">
                 <a href="index.html" class="logo">
-                    <img src="<?= base_url(); ?>assets/img/logo.png" width="35" height="35" alt=""> <span>Alma Property</span>
+                    <img src="<?= base_url(); ?>assets/img/logo.png" width="35" height="35" alt=""> <span>Arsada 2025</span>
                 </a>
             </div>
             <a id="toggle_btn" href="javascript:void(0);"><img src="<?= base_url(); ?>assets/img/icons/bar-icon.svg" alt=""></a>

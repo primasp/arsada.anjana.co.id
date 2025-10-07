@@ -8,7 +8,7 @@ class DashboardAdm_C extends CI_Controller
     {
         parent::__construct();
 
-        if ($this->session->userdata('role_id_ap') !== "1") {
+        if ($this->session->userdata('role_id_ap') !== "RU0001") {
             redirect('Login');
         }
 
@@ -25,7 +25,7 @@ class DashboardAdm_C extends CI_Controller
 
         $data['user'] = $this->db->get_where('users', ['user_id' => $this->session->userdata('user_id_ap')])->row_array();
 
-        // return var_dump($data['user']['full_name']);
+        // return var_dump($data['user']);
         // die;
 
         $this->load->view('templates/header');

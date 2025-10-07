@@ -43,20 +43,21 @@ class AuthController extends CI_Controller
 
 
 
+
                     $this->session->set_userdata($userdata);
 
 
 
                     switch ($user->role_id) {
-                        case "1":
+                        case "RU0001":
                             redirect('Dashboard-Admin');
                             // redirect('Admin_C');
                             break;
-                        case "2":
+                        case "RU0002":
                             redirect('Dashboard-Karyawan');
                             // redirect('PetugasRegistrasi_C');
                             break;
-                        case "3":
+                        case "RU0003":
                             redirect('Dashboard-User');
                             // redirect('User_C');
                             break;
