@@ -11,6 +11,53 @@
 }
 
 
+   .card-event {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, .06);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .card-event:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+        }
+
+
+        .poster-box .ratio img {
+            object-fit: contain;
+            /* gambar utuh, tidak terpotong */
+            background: #f6f7fb;
+            /* warna latar belakang “surat kabar” */
+        }
+
+        .overlay-soft {
+            background: linear-gradient(180deg, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .15) 60%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        .event-code {
+            font-size: .75rem;
+            letter-spacing: .4px;
+        }
+
+        .text-truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .text-truncate-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .btn-toolbar-gap .btn {
+            margin-left: .25rem;
+        }
+
   #modalRender .card {
     border-radius: 10px;
     border: 1px solid #dee2e6;
@@ -22,3 +69,7 @@
     display: block;
     margin-bottom: 0.3rem;
   }
+
+
+
+  

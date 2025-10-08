@@ -20,7 +20,7 @@ class EventController extends CI_Controller
         // $data['greeting'] = get_greeting();
         // $data['current_time'] = date('H:i');
         // $data['current_date'] = format_tanggal_indonesia_greeting();
-
+        $data['css'] = ['css/event.css'];
         $data['user'] = $this->db->get_where('users', ['user_id' => $this->session->userdata('user_id_ap')])->row_array();
 
         $data['title'] = 'Events';
@@ -41,11 +41,16 @@ class EventController extends CI_Controller
         // return var_dump($data['events']);
         // die;
 
-        $this->load->view('templates/header');
+        $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar');
         $this->load->view('admin/events/index', $data);
         $this->load->view('templates/footer');
     }
+
+
+
+
+
 
     public function create()
     {
@@ -60,6 +65,50 @@ class EventController extends CI_Controller
     }
 
 
+    private function _handle_poster_upload(array &$payload, $existing = null)
+    {
+        if (empty($_FILES['poster']['name'])) {
+            return; // tidak ada file diunggah
+        }
+
+        $upload_dir = FCPATH . 'uploads/events/';
+        if (!is_dir($upload_dir)) {
+            @mkdir($upload_dir, 0755, true);
+        }
+
+        $config = [
+            'upload_path'   => $upload_dir,
+            'allowed_types' => 'jpg|jpeg|png|webp',
+            'max_size'      => 4096,      // KB = 4MB
+            'encrypt_name'  => true,
+        ];
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('poster')) {
+            // simpan error ke flash lalu lanjut (payload tidak diubah)
+            $this->session->set_flashdata('error', strip_tags($this->upload->display_errors('', '')));
+            return;
+        }
+
+        $data = $this->upload->data(); // file_name, file_type, full_path, etc.
+
+        // Hapus file lama jika ganti (saat update)
+        if ($existing && !empty($existing->poster_path)) {
+            $old = FCPATH . $existing->poster_path;
+            if (is_file($old)) {
+                @unlink($old);
+            }
+        }
+
+        // Simpan ke payload untuk DB
+        $payload['poster_path'] = 'uploads/events/' . $data['file_name'];
+        $payload['poster_mime'] = $data['file_type'];
+        // Karena pakai file lokal, kosongkan poster_url (biar view pakai poster_path)
+        $payload['poster_url']  = null;
+    }
+
+
+
     public function store()
     {
         $this->_set_event_rules();
@@ -70,6 +119,11 @@ class EventController extends CI_Controller
         }
 
         $payload = $this->_event_payload();
+
+        // >>> handle upload poster (jika ada file)
+        $this->_handle_poster_upload($payload, null);
+
+
         $user_id = $this->session->userdata('user_id_ap');
 
         // Pastikan event & default form tercipta bersama-sama
@@ -79,49 +133,47 @@ class EventController extends CI_Controller
 
         $this->EventForm_model->create_default($event_id, $user_id);
 
+        if ($this->db->trans_status() === false) {
+            $this->db->trans_rollback();
+            $this->session->set_flashdata('error', 'Gagal menyimpan event.');
+            return redirect('admin/events/create');
+        }
+
         $this->db->trans_commit();
 
 
         $this->session->set_flashdata('success', 'Event dan form default berhasil dibuat.');
-        // redirect ke list event
+
         redirect('admin/events');
     }
 
 
-
-    public function storex()
+    public function update($id)
     {
 
+        $event = $this->Event_model->find($id);
+
+        if (!$event) show_404();
+
         $this->_set_event_rules();
-
-
-
-
         if (!$this->form_validation->run()) {
-            return $this->create();
+            return $this->edit($id);
         }
 
-
         $payload = $this->_event_payload();
-        return var_dump($payload);
-        die;
-        // Insert data ke tabel event, dan ambil event_id otomatis dari database
-        $this->db->insert('event', $payload);
-        $event_id = $this->db->insert_id(); // ambil nilai auto_increment terakhir
+
+        // >>> handle upload poster (jika ada file), auto hapus poster lama
+        $this->_handle_poster_upload($payload, $event);
 
 
-
-
-
-        $this->EventForm_model->create_default($event_id, $this->session->userdata('user_id'));
+        $this->Event_model->update($id, $payload);
+        $this->session->set_flashdata('success', 'Event updated');
+        redirect('admin/events');
     }
 
     private function _event_payload()
     {
-        // $data['user'] = $this->db->get_where('users', ['username' => $this->session->userdata('user_id_ap')])->row_array();
         $organizer = $this->session->userdata('user_id_ap');
-        // return var_dump($organizer);
-        // die;
 
         return [
             'organizer_id' => $organizer,
@@ -134,7 +186,6 @@ class EventController extends CI_Controller
             'end_at' => $this->input->post('end_at', true),
             'status' => $this->input->post('status', true) ?: 'draft',
             'max_participants' => $this->input->post('max_participants', true) ?: null,
-            // 'is_public' => $this->input->post('is_public') ? 1 : 0,
             'is_public' => $this->input->post('is_public') ? true : false,
         ];
     }
@@ -149,8 +200,6 @@ class EventController extends CI_Controller
 
     public function edit($id)
     {
-        // return var_dump("oke");
-        // die;
         $data['event'] = $this->Event_model->find($id);
         if (!$data['event']) show_404();
         $data['title'] = 'Edit Event';

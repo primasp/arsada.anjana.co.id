@@ -1,13 +1,33 @@
-<?php echo form_open($action, ['class' => 'needs-validation', 'novalidate' => true]); ?>
+<?php echo form_open_multipart($action, ['class' => 'needs-validation', 'novalidate' => true]); ?>
 <div class="row g-3">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <label class="form-label">Kode Event</label>
         <input type="text" name="event_code" class="form-control" required value="<?= set_value('event_code', $event->event_code ?? '') ?>">
     </div>
-    <div class="col-md-9">
+
+
+
+
+
+    <div class="col-md-6">
         <label class="form-label">Judul</label>
         <input type="text" name="title" class="form-control" required value="<?= set_value('title', $event->title ?? '') ?>">
     </div>
+
+    <!-- Poster -->
+    <div class="col-md-4">
+        <label class="form-label">Poster (JPG/PNG/WebP, max 4MB)</label>
+        <input type="file" name="poster" class="form-control" accept="image/*">
+        <div class="form-text">Opsional. Jika diisi, akan menimpa poster sebelumnya.</div>
+
+        <?php if (!empty($event->poster_path) || !empty($event->poster_url)) :
+            $poster = !empty($event->poster_path) ? base_url($event->poster_path) : $event->poster_url; ?>
+            <div class="mt-2">
+                <img src="<?= html_escape($poster) ?>" alt="Poster" class="img-fluid rounded border">
+            </div>
+        <?php endif; ?>
+    </div>
+
     <div class="col-12">
         <label class="form-label">Deskripsi</label>
         <textarea name="description" class="form-control" rows="3"><?= set_value('description', $event->description ?? '') ?></textarea>
@@ -48,6 +68,12 @@
             <label class="form-check-label">Ya</label>
         </div>
     </div>
+
+
+
+
+
+
 </div>
 <hr>
 <div class="d-flex gap-2">

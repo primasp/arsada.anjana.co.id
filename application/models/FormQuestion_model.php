@@ -34,6 +34,7 @@ class FormQuestion_model extends CI_Model
                     'label'         => $row->label,
                     'question_type' => $row->question_type,
                     'is_required'   => $row->is_required,
+                    'is_system'   => $row->is_system,
                     'placeholder'   => $row->placeholder,
                     'options'       => []
                 ];

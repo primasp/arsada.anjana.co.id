@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$route['default_controller'] = 'ClientController';
+$route['default_controller'] = 'AuthController';
 
 
 
@@ -12,6 +12,7 @@ $route['admin/events'] = 'Admin/EventController/index';
 $route['admin/events/create'] = 'Admin/EventController/create';
 $route['admin/events/store'] = 'Admin/EventController/store';
 $route['admin/events/(:any)/edit'] = 'Admin/EventController/edit/$1';
+$route['admin/events/(:any)/update'] = 'Admin/EventController/update/$1';
 
 $route['admin/forms/section/store'] = 'Admin/FormBuilderController/store_section';
 $route['admin/forms/question/store'] = 'Admin/FormBuilderController/store_question';
@@ -23,7 +24,7 @@ $route['admin/forms/sort-items'] = 'Admin/FormBuilderController/sort_items';
 $route['event'] = 'Public/EventPublicController/index';
 $route['event/(:any)'] = 'Public/EventPublicController/detail/$1';
 $route['event/daftar/(:any)'] = 'Public/EventPublicController/daftar/$1';
-$route['event/(:any)/submit'] = 'EventPublicController/submit/$1';
+$route['event/(:any)/submit'] = 'Public/EventPublicController/submit/$1';
 
 
 
@@ -33,7 +34,7 @@ $route['admin/events/(:any)/builder'] = 'Admin/FormBuilderController/index/$1';
 
 
 
-$route['Client'] = 'ClientController';
+// $route['Client'] = 'ClientController';
 $route['Login'] = 'AuthController';
 $route['Logout'] = 'AuthController/logout';
 

@@ -25,6 +25,8 @@ class FormBuilderController extends CI_Controller
 
 
         $form = $this->EventForm_model->get_default_by_event($event_id);
+        // return var_dump($form);
+        // die;
 
         // return var_dump($form->form_id);
         // die;

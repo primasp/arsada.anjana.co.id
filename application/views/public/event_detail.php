@@ -1,3 +1,9 @@
+<?php
+$poster = !empty($event->poster_url)
+    ? $event->poster_url
+    : (!empty($event->poster_path) ? base_url($event->poster_path) : base_url('assets/img/event/blog-01.jpg'));
+?>
+
 <div class="content p-4">
 
     <!-- Page Header -->
@@ -34,11 +40,14 @@
     <!-- Event Detail -->
     <div class="container">
         <div class="card border-0 shadow-sm p-4">
-            <div class="row align-items-start">
+            <!-- <div class="row align-items-start"> -->
+            <div class="row align-items-center">
 
                 <!-- Poster -->
                 <div class="col-md-4 mb-3 mb-md-0">
-                    <img src="<?= html_escape($event->poster_url ?? base_url('assets/img/event/blog-1.jpg')) ?>" alt="<?= html_escape($event->title) ?>" class="img-fluid rounded shadow-sm w-100" style="object-fit: cover; max-height: 350px;">
+                    <!-- <img src="<?= html_escape($event->poster_url ?? base_url('assets/img/event/blog-1.jpg')) ?>" alt="<?= html_escape($event->title) ?>" class="img-fluid rounded shadow-sm w-100" style="object-fit: cover; max-height: 350px;"> -->
+                    <img src="<?= html_escape($poster) ?>" alt="Poster <?= html_escape($event->title) ?>" class="img-fluid rounded shadow-sm w-100" loading="lazy">
+
                 </div>
 
                 <!-- Event Info -->

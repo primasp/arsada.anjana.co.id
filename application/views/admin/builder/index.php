@@ -125,7 +125,15 @@
                                                 </div>
 
                                             </div>
-                                            <button class="btn btn-sm btn-outline-danger btnDelQuestion" data-id="<?= $q->question_id ?>">Hapus</button>
+                                            <!-- <button class="btn btn-sm btn-outline-danger btnDelQuestion" data-id="<?= $q->question_id ?>">Hapus</button> -->
+
+                                            <?php if (empty($q->is_system) || $q->is_system == 'f') : ?>
+                                                <button class="btn btn-sm btn-outline-danger btnDelQuestion" data-id="<?= $q->question_id ?>">Hapus</button>
+                                            <?php else : ?>
+                                                <button class="btn btn-sm btn-outline-secondary" disabled>
+                                                    <i class="feather-lock"></i>
+                                                </button>
+                                            <?php endif; ?>
                                         </div>
 
 
