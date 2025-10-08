@@ -6,6 +6,8 @@ $route['default_controller'] = 'ClientController';
 
 
 
+
+
 $route['admin/events'] = 'Admin/EventController/index';
 $route['admin/events/create'] = 'Admin/EventController/create';
 $route['admin/events/store'] = 'Admin/EventController/store';
@@ -13,6 +15,15 @@ $route['admin/events/(:any)/edit'] = 'Admin/EventController/edit/$1';
 
 $route['admin/forms/section/store'] = 'Admin/FormBuilderController/store_section';
 $route['admin/forms/question/store'] = 'Admin/FormBuilderController/store_question';
+$route['admin/forms/section/(:any)/delete'] = 'Admin/FormBuilderController/delete_section/$1';
+$route['admin/forms/question/(:any)/delete']  = 'admin/FormBuilderController/delete_question/$1';
+$route['admin/forms/option/store'] = 'Admin/FormBuilderController/store_option';
+$route['admin/forms/sort-items'] = 'Admin/FormBuilderController/sort_items';
+
+$route['event'] = 'Public/EventPublicController/index';
+$route['event/(:any)'] = 'Public/EventPublicController/detail/$1';
+$route['event/daftar/(:any)'] = 'Public/EventPublicController/daftar/$1';
+$route['event/(:any)/submit'] = 'EventPublicController/submit/$1';
 
 
 

@@ -38,7 +38,19 @@ $roleName = $roleMap[$this->session->userdata('role_id_ap')] ?? 'User';
     <!-- Main CSS -->
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/style.css">
 
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/property.css?v=<?= time() ?>">
+    <!-- <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/property.css?v=<?= time() ?>"> -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Dynamic CSS from Controller -->
+    <?php if (isset($css)) : ?>
+
+        <?php foreach ((array)$css as $file) : ?>
+            <link rel="stylesheet" type="text/css" href="<?= base_url('assets/' . $file . '?v=' . time()); ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <!-- <script src="<?= base_url(); ?>assets/plugins/moment/moment.min.js"></script> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css') ?>">

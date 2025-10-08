@@ -211,10 +211,7 @@
 </div>
 <div class="sidebar-overlay" data-reff=""></div>
 
-<script>
-    // var baseUrl = "<?php echo base_url(); ?>";
-    var BASE_URL = '<?= base_url() ?>';
-</script>
+
 
 <!-- jQuery -->
 <script src="<?= base_url(); ?>assets/js/jquery-3.7.1.min.js"></script>
@@ -264,6 +261,9 @@
 
 
 
+<script>
+    feather.replace();
+</script>
 
 
 
@@ -271,10 +271,22 @@
 
 
 <?php if (isset($script)) : ?>
-    <!-- <script src="<?= base_url('assets/' . $script); ?>"></script> -->
-    <script type="text/javascript" src="<?= base_url('assets/' . $script . '?v=' . time()); ?>"></script>
-
+    <?php if (is_array($script)) : ?>
+        <?php foreach ($script as $file) : ?>
+            <script src="<?= base_url('assets/' . $file . '?v=' . time()); ?>"></script>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <script src="<?= base_url('assets/' . $script . '?v=' . time()); ?>"></script>
+    <?php endif; ?>
 <?php endif; ?>
+
+<script>
+    var BASE_URL = '<?= base_url() ?>';
+</script>
+
+
+
+
 
 
 </body>

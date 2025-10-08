@@ -21,6 +21,12 @@
                     <div class="text-muted">Event: <strong><?= html_escape($event->title) ?>
                         </strong> — Form: <strong><?= html_escape($form->name) ?></strong></div>
                 </div>
+                <!-- <a class="btn btn-secondary" href="<?= site_url('admin/events') ?>">Kembali</a> -->
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalRender">
+                    <i class="feather-eye me-1"></i> View Render
+                </a>
                 <a class="btn btn-secondary" href="<?= site_url('admin/events') ?>">Kembali</a>
             </div>
             <input type="hidden" id="form_id" value="<?= $form->form_id ?>">
@@ -28,151 +34,171 @@
             <div class="row g-3">
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-itemscenter">
+                        <!-- <div class="card-header d-flex justify-content-between align-itemscenter"> -->
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <strong>Sections</strong>
                             <button class="btn btn-sm btn-primary" id="btnAddSection">+
                                 Section</button>
                         </div>
                         <ul class="list-group list-group-flush" id="sectionList">
                             <?php foreach ($sections as $s) : ?>
-                                <li class="list-group-item d-flex justify-content-between alignitems-center" data-id="<?= $s->section_id ?>">
+                                <!-- <li class="list-group-item d-flex justify-content-between align-items-center section-item" data-id="<?= $s->section_id ?>">
                                     <span><?= html_escape($s->title) ?></span>
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-primary btnAddQuestion" datasection="<?= $s->section_id ?>">+ Question</button>
-                                        <button class="btn btn-outline-danger btnDelSection" dataid="<?= $s->section_id ?>">Hapus</button>
+                                        <button class="btn btn-outline-primary btnAddQuestion" data-section="<?= $s->section_id ?>">+ Question</button>
+                                        <button class="btn btn-outline-danger btnDelSection" data-id="<?= $s->section_id ?>">Hapus</button>
+                                    </div>
+                                </li> -->
+
+
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center section-item" data-id="<?= $s->section_id ?>">
+                                    <div class="d-flex align-items-center">
+                                        <span class="drag-handle me-2 text-muted" title="Geser untuk ubah urutan" style="cursor: grab;">
+                                            <i data-feather="move"></i>
+                                        </span>
+                                        <span><?= html_escape($s->title) ?></span>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-primary btnAddQuestion" data-section="<?= $s->section_id ?>">+ Question</button>
+                                        <button class="btn btn-outline-danger btnDelSection" data-id="<?= $s->section_id ?>">Hapus</button>
                                     </div>
                                 </li>
+
+
+
+
+
                             <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
+
+
+
+
+
+
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header"><strong>Pertanyaan</strong></div>
-                        <div class="list-group list-group-flush" id="questionList">
-                            <?php foreach ($questions as $section_id => $items) : ?>
-                                <?php foreach ($items as $q) : ?>
-                                    <div class="list-group-item d-flex justify-content-between
-align-items-center" data-id="<?= $q->question_id ?>">
-                                        <div>
-                                            <div><strong><?= html_escape($q->label) ?></strong> <small class="text-muted">(<?= $q->question_type ?>)</small></div>
-                                            <?php if (in_array(
-                                                $q->question_type,
-                                                ['single_choice', 'multi_choice', 'radio', 'checkbox']
-                                            )) : ?>
-                                                <div class="mt-1">
-                                                    <button class="btn btn-sm btn-outline-secondary
-btnAddOption" data-qid="<?= $q->question_id ?>">+ Option</button>
+                        <div class="list-group list-group-flush question-list" id="questionList">
+                            <?php foreach ($sections as $s) : ?>
+                                <div class="list-group-item bg-light fw-semibold">
+                                    <?= html_escape($s->title) ?>
+                                </div>
+
+                                <?php if (!empty($questions[$s->section_id])) : ?>
+                                    <?php foreach ($questions[$s->section_id] as $q) : ?>
+                                        <div class="list-group-item d-flex justify-content-between align-items-center question-item" data-id="<?= $q->question_id ?>">
+                                            <div class="d-flex align-items-start">
+                                                <span class="drag-handle me-2 text-muted" title="Geser untuk ubah urutan" style="cursor: grab;">
+                                                    <i data-feather="move"></i>
+                                                </span>
+                                                <div>
+                                                    <div>
+                                                        <strong>
+                                                            <?= html_escape($q->label) ?>
+                                                            <?php if (!empty($q->is_required) && $q->is_required == "t") : ?>
+                                                                <span class="text-danger" title="Wajib diisi">*</span>
+                                                            <?php endif; ?>
+                                                        </strong>
+                                                        <small class="text-muted">(<?= $q->question_type ?>)</small>
+                                                    </div>
+                                                    <?php if (in_array($q->question_type, ['single_choice', 'multi_choice', 'radio', 'checkbox', 'select'])) : ?>
+                                                        <div class="mt-1">
+                                                            <button class="btn btn-sm btn-outline-secondary btnAddOption" data-qid="<?= $q->question_id ?>">+ Option</button>
+
+                                                            <?php if (!empty($q->options)) : ?>
+                                                                <ul class="small mt-2 ms-3 text-muted">
+                                                                    <?php foreach ($q->options as $opt) : ?>
+                                                                        <li><?= html_escape($opt->option_label) ?>
+                                                                            <small class="text-secondary">(<?= html_escape($opt->option_value) ?>)</small>
+                                                                        </li>
+                                                                    <?php endforeach; ?>
+                                                                </ul>
+                                                            <?php else : ?>
+                                                                <div class="small text-muted ms-3">Belum ada opsi</div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
-                                            <?php endif; ?>
+
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-danger btnDelQuestion" data-id="<?= $q->question_id ?>">Hapus</button>
                                         </div>
-                                        <button class="btn btn-sm btn-outline-danger btnDelQuestion" data-id="<?= $q->question_id ?>">Hapus</button>
-                                    </div>
-                                <?php endforeach; ?>
+
+
+
+
+
+                                        <!-- <div class="list-group-item d-flex justify-content-between align-items-center question-item" data-id="<?= $q->question_id ?>">
+                                            <div class="d-flex align-items-start">
+                                                <span class="drag-handle me-2 text-muted" title="Geser untuk ubah urutan" style="cursor: grab;">
+                                                    <i data-feather="move"></i>
+                                                </span>
+                                                <div>
+                                                    <strong>
+                                                        <?= html_escape($q->label) ?>
+                                                        <?php if (!empty($q->is_required) && $q->is_required == "t") : ?>
+                                                            <span class="text-danger" title="Wajib diisi">*</span>
+                                                        <?php endif; ?>
+                                                    </strong>
+                                                    <small class="text-muted">(<?= $q->question_type ?>)</small>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-danger btnDelQuestion" data-id="<?= $q->question_id ?>">Hapus</button>
+                                        </div> -->
+
+
+
+
+
+
+
+
+
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div class="list-group-item text-muted fst-italic ps-4">Belum ada pertanyaan</div>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
         </div>
         <!-- Simple modals inline -->
-        <div class="modal" tabindex="-1" id="modalSection">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Section</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></ button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Judul</label>
-                            <input type="text" class="form-control" id="sectionTitle">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="sectionDesc"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</ button>
-                            <button class="btn btn-primary" id="saveSection">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal" tabindex="-1" id="modalQuestion">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Pertanyaan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></ button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="qSectionId">
-                        <div class="mb-3">
-                            <label class="form-label">Label</label>
-                            <input type="text" class="form-control" id="qLabel">
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <label class="form-label">Tipe</label>
-                                <select class="form-select" id="qType">
-                                    <option value="short_text">Short Text</option>
-                                    <option value="long_text">Long Text</option>
-                                    <option value="single_choice">Single Choice</option>
-                                    <option value="multi_choice">Multi Choice</option>
-                                    <option value="email">Email</option>
-                                    <option value="number">Number</option>
-                                    <option value="date">Date</option>
-                                    <option value="datetime">Datetime</option>
-                                    <option value="url">URL</option>
-                                    <option value="file">File</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Required?</label>
-                                <select class="form-select" id="qRequired">
-                                    <option value="0">Tidak</option>
-                                    <option value="1">Ya</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Placeholder</label>
-                            <input type="text" class="form-control" id="qPlaceholder">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</ button>
-                            <button class="btn btn-primary" id="saveQuestion">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal" tabindex="-1" id="modalOption">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Opsi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></ button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="optQid">
-                        <div class="mb-3">
-                            <label class="form-label">Label</label>
-                            <input type="text" class="form-control" id="optLabel">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Value</label>
-                            <input type="text" class="form-control" id="optValue">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</ button>
-                            <button class="btn btn-primary" id="saveOption">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+
+
+
     </div>
 </div>

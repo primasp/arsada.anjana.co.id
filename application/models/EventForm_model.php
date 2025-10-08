@@ -41,7 +41,7 @@ class EventForm_model extends CI_Model
     public function get_default_by_event($event_id)
     {
         return $this->db
-            ->where(['event_id' => $event_id, 'is_default' => '1'])
+            ->where(['event_id' => $event_id, 'is_default' => '1', 'aktif' => '1'])
             ->get($this->table)->row();
     }
 }

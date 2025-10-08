@@ -23,7 +23,7 @@
         <?php if (!empty($events)) : ?>
             <?php foreach ($events as $e) : ?>
                 <?php
-                $poster = !empty($e->poster_url) ? $e->poster_url : (!empty($e->poster_path) ? base_url($e->poster_path) : base_url('assets/img/event/placeholder.jpg'));
+                $poster = !empty($e->poster_url) ? $e->poster_url : (!empty($e->poster_path) ? base_url($e->poster_path) : base_url('assets/img/event/blog-1.jpg'));
                 $isActive = (bool)$e->is_active;
                 $badgeCls = $e->status === 'open' ? 'bg-success' : ($e->status === 'closed' ? 'bg-secondary' : 'bg-warning');
                 ?>
@@ -31,15 +31,13 @@
                     <div class="blog grid-blog">
                         <div class="blog-image">
                             <a href="blog-details.html">
-                                <!-- <img class="img-fluid" src="<?= base_url(html_escape($poster)); ?>" alt=""> -->
                                 <img src="<?= html_escape($poster) ?>" class="card-img-top" alt="Poster <?= html_escape($e->title) ?>" style="height: 220px; object-fit: cover;">
-                                <!-- <img src="<?= html_escape($poster) ?>" class="w-100 h-100" alt="Poster <?= html_escape($e->title) ?>"> -->
                             </a>
                             <div class="position-absolute top-0 end-0 m-2">
                                 <a class="btn btn-sm btn-outline-secondary" href="<?= site_url('admin/events/' . $e->event_id . '/edit') ?>">Edit</a>
                                 <a class="btn btn-sm btn-outline-primary" href="<?= site_url('admin/events/' . $e->event_id . '/builder') ?>">Builder</a>
                                 <a class="btn btn-sm btn-success" href="<?= site_url('admin/events/' . $e->event_id . '/publish') ?>">Publish</a>
-                                <a class="btn btn-sm btn-outline-danger" href="<?= site_url('admin/events/' . $e->event_id . '/delete') ?>" onclick="return confirm('Hapus event?')">Hapus</a>
+                                <a href="#" class="btn btn-sm btn-outline-danger btnDeleteEvent" data-id="<?= $e->event_id ?>">Hapus</a>
                             </div>
                             <div class="blog-views">
                                 <h5><?= html_escape($e->event_code) ?></h5>
@@ -52,11 +50,11 @@
                         <div class="blog-content">
                             <div class="blog-grp-blk">
                                 <div class="blog-img-blk">
-                                    <a href="profile.html"><img class="img-fluid" src="assets/img/profiles/avatar-01.jpg" alt=""></a>
-                                    <div class="content-blk-blog ms-2">
+                                    <!-- <a href="profile.html"><img class="img-fluid" src="assets/img/profiles/avatar-01.jpg" alt=""></a> -->
+                                    <!-- <div class="content-blk-blog ms-2">
                                         <h4><a href="profile.html">Jenifer Robinson</a></h4>
                                         <h5>M.B.B.S, Diabetologist</h5>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <span><i class="feather-calendar me-1"></i><?= $e->start_at ?> – <?= $e->end_at ?></span>
                             </div>

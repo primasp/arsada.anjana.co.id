@@ -33,7 +33,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/style.css">
 
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/property.css?v=<?= time() ?>">
+    <!-- <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/property.css?v=<?= time() ?>"> -->
 
     <!-- <script src="<?= base_url(); ?>assets/plugins/moment/moment.min.js"></script> -->
 

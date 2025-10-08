@@ -7,12 +7,45 @@ class Event_model extends CI_Model
 
     public function list_all()
     {
-        return $this->db->order_by('created_at', 'DESC')->get($this->table)->result();
+        // return $this->db->order_by('created_at', 'DESC')->get($this->table)->result();
+        return $this->db
+            ->where('aktif', '1') // hanya event aktif
+            ->order_by('created_at', 'DESC')
+            ->get($this->table)
+            ->result();
     }
+
+    public function list_public()
+    {
+        return $this->db
+            ->where('is_public', true)
+            ->where('is_active', true)
+            ->where('aktif', '1')
+            ->where('status', 'open')
+            ->order_by('start_at', 'DESC')
+            ->get($this->table)
+            ->result();
+        // ->result_array();
+    }
+    public function find_by_code($event_code)
+    {
+        return $this->db
+            ->where('event_code', $event_code)
+            ->get($this->table)
+            ->row();
+    }
+
+
 
     public function find($id)
     {
-        return $this->db->get_where($this->table, ['event_id' => $id])->row();
+        // return $this->db->get_where($this->table, ['event_id' => $id])->row();
+        return $this->db
+            ->get_where($this->table, [
+                'event_id' => $id,
+                'aktif'    => '1'
+            ])
+            ->row();
     }
 
     public function create($payload)
@@ -40,5 +73,10 @@ class Event_model extends CI_Model
 
         $row = $query->row();
         return $row ? $row->event_id : null;
+    }
+
+    public function delete($id)
+    {
+        return $this->db->update($this->table, ['aktif' => '0'], ['event_id' => $id]);
     }
 }
