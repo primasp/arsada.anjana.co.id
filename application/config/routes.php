@@ -25,6 +25,17 @@ $route['event'] = 'Public/EventPublicController/index';
 $route['event/(:any)'] = 'Public/EventPublicController/detail/$1';
 $route['event/daftar/(:any)'] = 'Public/EventPublicController/daftar/$1';
 $route['event/(:any)/submit'] = 'Public/EventPublicController/submit/$1';
+$route['event/(:any)/success'] = 'Public/EventPublicController/success/$1';
+
+
+
+$route['verify/(:any)'] = 'Public/EventVerifyController/verify/$1';
+$route['verify/(:any)/confirm'] = 'Public/EventVerifyController/confirm/$1';
+
+$route['verify'] = 'Public/EventVerifyController/verify_by_adm';
+// $route['verify/confirm'] = 'Public/EventVerifyController/confirm_manual';
+$route['verify-confirm-manual'] = 'Public/EventVerifyController/confirm_manual';
+
 
 
 

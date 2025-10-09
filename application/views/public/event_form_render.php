@@ -68,6 +68,7 @@
                                             <?php
                                             $type = $q->question_type;
                                             $name = "q_" . $q->question_id;
+                                            $required = ($q->is_required == 't') ? 'required' : '';
                                             ?>
                                             <div class="mb-3">
                                                 <label class="form-label fw-semibold">
@@ -78,33 +79,33 @@
                                                 </label>
 
                                                 <?php if ($type === 'short_text') : ?>
-                                                    <input type="text" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $q->is_required == 't' ? 'required' : '' ?>>
+                                                    <input type="text" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $required ?>>
 
                                                 <?php elseif ($type === 'long_text') : ?>
-                                                    <textarea name="<?= $name ?>" rows="3" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $q->is_required == 't' ? 'required' : '' ?>></textarea>
+                                                    <textarea name="<?= $name ?>" rows="3" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $required ?>></textarea>
 
                                                 <?php elseif ($type === 'number') : ?>
-                                                    <input type="number" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>">
+                                                    <input type="number" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $required ?>>
 
                                                 <?php elseif ($type === 'email') : ?>
-                                                    <input type="email" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>">
+                                                    <input type="email" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $required ?>>
 
                                                 <?php elseif ($type === 'date') : ?>
-                                                    <input type="date" name="<?= $name ?>" class="form-control">
+                                                    <input type="date" name="<?= $name ?>" class="form-control" <?= $required ?>>
 
                                                 <?php elseif ($type === 'datetime') : ?>
-                                                    <input type="datetime-local" name="<?= $name ?>" class="form-control">
+                                                    <input type="datetime-local" name="<?= $name ?>" class="form-control" <?= $required ?>>
 
                                                 <?php elseif ($type === 'url') : ?>
-                                                    <input type="url" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>">
+                                                    <input type="url" name="<?= $name ?>" class="form-control" placeholder="<?= html_escape($q->placeholder) ?>" <?= $required ?>>
 
                                                 <?php elseif ($type === 'file') : ?>
-                                                    <input type="file" name="<?= $name ?>" class="form-control">
+                                                    <input type="file" name="<?= $name ?>" class="form-control" <?= $required ?>>
 
                                                 <?php elseif ($type === 'single_choice' || $type === 'radio') : ?>
                                                     <?php foreach ($q->options as $opt) : ?>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="<?= $name ?>" value="<?= html_escape($opt->option_value) ?>" id="opt_<?= $opt->option_id ?>">
+                                                            <input class="form-check-input" type="radio" name="<?= $name ?>" value="<?= html_escape($opt->option_value) ?>" id="opt_<?= $opt->option_id ?>" <?= $required ?>>
                                                             <label class="form-check-label" for="opt_<?= $opt->option_id ?>">
                                                                 <?= html_escape($opt->option_label) ?>
                                                             </label>
@@ -114,7 +115,7 @@
                                                 <?php elseif ($type === 'multi_choice' || $type === 'checkbox') : ?>
                                                     <?php foreach ($q->options as $opt) : ?>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="<?= $name ?>[]" value="<?= html_escape($opt->option_value) ?>" id="opt_<?= $opt->option_id ?>">
+                                                            <input class="form-check-input" type="checkbox" name="<?= $name ?>[]" value="<?= html_escape($opt->option_value) ?>" id="opt_<?= $opt->option_id ?>" <?= $required ?>>
                                                             <label class="form-check-label" for="opt_<?= $opt->option_id ?>">
                                                                 <?= html_escape($opt->option_label) ?>
                                                             </label>
@@ -122,7 +123,7 @@
                                                     <?php endforeach; ?>
 
                                                 <?php elseif ($type === 'select') : ?>
-                                                    <select name="<?= $name ?>" class="form-select">
+                                                    <select name="<?= $name ?>" class="form-select" <?= $required ?>>
                                                         <option value="">-- Pilih --</option>
                                                         <?php foreach ($q->options as $opt) : ?>
                                                             <option value="<?= html_escape($opt->option_value) ?>">
