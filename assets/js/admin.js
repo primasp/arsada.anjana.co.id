@@ -173,10 +173,6 @@ $(document).ready(function () {
     });
   });
 
-  $(document).on("click", ".btnDeleteEvent", function (e) {
-    alert("delete");
-  });
-
   // === ADD QUESTION ===
   $(".btnAddQuestion").on("click", function () {
     $("#qSectionId").val($(this).data("section"));

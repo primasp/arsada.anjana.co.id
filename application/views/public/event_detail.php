@@ -72,7 +72,7 @@ $poster = !empty($event->poster_url)
                     <!-- Tombol Aksi -->
                     <div class="d-flex flex-wrap gap-2">
                         <a href="<?= site_url('event/daftar/' . $event->event_code) ?>" class="btn btn-success px-4 shadow-sm">
-                            <i class="feather-check-circle me-1"></i> Daftar Event
+                            <i class="feather-check-circle me-1"></i> Pendaftaran Peserta
                         </a>
 
                         <a href="<?= site_url('event') ?>" class="btn btn-outline-secondary px-4 shadow-sm">

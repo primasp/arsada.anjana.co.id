@@ -256,7 +256,7 @@
 <!-- Custom JS -->
 <script src="<?= base_url(); ?>assets/js/app.js"></script>
 
-<script src="<?= base_url(); ?>assets/js/moment.min.js"></script>
+<!-- <script src="<?= base_url(); ?>assets/js/moment.min.js"></script> -->
 <script src="<?= base_url(); ?>assets/js/jquery-ui.min.js"></script>
 
 

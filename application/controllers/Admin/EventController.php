@@ -16,6 +16,7 @@ class EventController extends CI_Controller
 
     public function index()
     {
+        $data['script'] = 'js/event.js';
         // $data['script'] = 'js/admin.js';
         // $data['greeting'] = get_greeting();
         // $data['current_time'] = date('H:i');
@@ -147,7 +148,18 @@ class EventController extends CI_Controller
         redirect('admin/events');
     }
 
+    public function delete($id)
+    {
+        $event = $this->Event_model->find($id);
+        if (!$event) show_404();
+        $ok = $this->Event_model->delete($id);
 
+        if ($ok) {
+            return $this->_json_ok(['deleted' => true]);
+        } else {
+            return $this->_json_error("Gagal menghapus event.");
+        }
+    }
     public function update($id)
     {
 
@@ -171,6 +183,19 @@ class EventController extends CI_Controller
         redirect('admin/events');
     }
 
+    private function _json_error($message)
+    {
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['ok' => false, 'error' => $message]));
+    }
+    private function _json_ok($data = [])
+    {
+        $data = array_merge(['ok' => true], $data);
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($data));
+    }
     private function _event_payload()
     {
         $organizer = $this->session->userdata('user_id_ap');

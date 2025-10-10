@@ -13,6 +13,7 @@ $route['admin/events/create'] = 'Admin/EventController/create';
 $route['admin/events/store'] = 'Admin/EventController/store';
 $route['admin/events/(:any)/edit'] = 'Admin/EventController/edit/$1';
 $route['admin/events/(:any)/update'] = 'Admin/EventController/update/$1';
+$route['admin/events/(:any)/delete'] = 'Admin/EventController/delete/$1';
 
 $route['admin/forms/section/store'] = 'Admin/FormBuilderController/store_section';
 $route['admin/forms/question/store'] = 'Admin/FormBuilderController/store_question';

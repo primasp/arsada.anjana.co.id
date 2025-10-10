@@ -16,8 +16,9 @@ class FormBuilderController extends CI_Controller
 
     public function index($event_id)
     {
-        $data['css'] = ['css/event.css'];
         $data['script'] = 'js/admin.js';
+
+        $data['css'] = ['css/event.css'];
 
 
         $event = $this->Event_model->find($event_id);

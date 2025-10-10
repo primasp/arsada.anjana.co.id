@@ -39,30 +39,48 @@
                     <div class="card card-event h-100">
 
                         <!-- Poster -->
-                        <!-- <div class="position-relative poster-wrap"> -->
+
+
+
+
+
+
                         <div class="position-relative poster-box">
+
+                            <!-- Poster Gambar -->
                             <div class="ratio ratio-16x9">
-                                <img src="<?= html_escape($poster) ?>" alt="Poster <?= html_escape($e->title) ?>" class="w-100 h-100" loading="lazy">
+                                <img src="<?= html_escape($poster) ?>" alt="Poster <?= html_escape($e->title) ?>" class="w-100 h-100" loading="lazy" style="">
                             </div>
 
-                            <!-- overlay gradient top -->
-                            <div class="position-absolute top-0 start-0 end-0 p-2 overlay-soft"></div>
-
-                            <!-- left-top badges -->
+                            <!-- Badge kiri atas -->
                             <div class="position-absolute top-0 start-0 p-2 d-flex align-items-center gap-2">
                                 <span class="badge event-code bg-light text-dark fw-semibold"><?= html_escape($e->event_code) ?></span>
                                 <span class="badge <?= $badgeCls ?> text-uppercase"><?= html_escape($status) ?></span>
                                 <?php if (!$isActive) : ?><span class="badge bg-dark">Nonaktif</span><?php endif; ?>
                             </div>
 
-                            <!-- right-top toolbar -->
-                            <div class="position-absolute top-0 end-0 p-2 btn-toolbar-gap">
+                            <!-- Toolbar tombol di bawah poster -->
+                            <div class="d-flex justify-content-end gap-1 p-2 bg-light border-top" style="border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem;">
                                 <a class="btn btn-sm btn-light" href="<?= site_url('admin/events/' . $e->event_id . '/edit') ?>">Edit</a>
                                 <a class="btn btn-sm btn-primary" href="<?= site_url('admin/events/' . $e->event_id . '/builder') ?>">Builder</a>
                                 <a class="btn btn-sm btn-success" href="<?= site_url('admin/events/' . $e->event_id . '/publish') ?>">Publish</a>
                                 <a href="#" class="btn btn-sm btn-outline-danger btnDeleteEvent" data-id="<?= $e->event_id ?>">Hapus</a>
                             </div>
+
                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         <!-- Body -->
                         <div class="card-body">
@@ -94,6 +112,23 @@
 
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <?php endforeach; ?>
         <?php else : ?>
             <div class="col-12">
