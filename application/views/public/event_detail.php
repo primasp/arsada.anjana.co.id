@@ -56,7 +56,7 @@ $poster = !empty($event->poster_url)
 
                     <p class="text-muted mb-1">
                         <i class="feather-calendar me-1"></i>
-                        <?= date('d M Y H:i', strtotime($event->start_at)) ?> –
+                        <?= date('d M Y H:i', strtotime($event->start_at)) ?> -
                         <?= date('d M Y H:i', strtotime($event->end_at)) ?>
                     </p>
 

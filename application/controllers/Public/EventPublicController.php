@@ -398,7 +398,7 @@ class EventPublicController extends CI_Controller
             $mail->Body = '
         <div style="font-family:Arial, Helvetica, sans-serif; color:#333; font-size:14px;">
             <div style="text-align:center; border-bottom:2px solid #0d6efd; padding-bottom:8px; margin-bottom:20px;">
-                <img src="' . base_url('assets/img/logo-arsada.png') . '" alt="ARSADA" height="60">
+                <img src="' . base_url('assets/img/logo-arsada.jpg') . '" alt="ARSADA" height="60">
                 <h2 style="margin:5px 0; color:#0d6efd;">ARSADA EVENT SYSTEM</h2>
             </div>
 

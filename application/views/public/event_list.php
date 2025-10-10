@@ -95,7 +95,7 @@
                                 <div class="mb-2">
                                     <i class="feather-calendar text-primary me-1"></i>
                                     <small class="text-muted">
-                                        <?= date('d M Y H:i', strtotime($e->start_at)) ?> —
+                                        <?= date('d M Y H:i', strtotime($e->start_at)) ?> -
                                         <?= date('d M Y H:i', strtotime($e->end_at)) ?>
                                     </small>
                                 </div>

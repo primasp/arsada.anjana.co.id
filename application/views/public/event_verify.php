@@ -3,7 +3,7 @@
 
         <div class="card shadow-lg border-0 mx-auto" style="max-width:600px;">
             <div class="card-body p-5">
-                <img src="<?= base_url('assets/img/logo-arsada.png') ?>" height="70" class="mb-3">
+                <img src="<?= base_url('assets/img/logo-arsada.jpg') ?>" height="70" class="mb-3">
                 <h3 class="fw-bold text-primary mb-2">Verifikasi Kehadiran</h3>
                 <p class="text-muted mb-4">ARSADA Event Management System</p>
 

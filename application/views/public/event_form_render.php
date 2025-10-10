@@ -37,13 +37,16 @@
                 <div class="col-lg-8">
 
                     <!-- Informasi Event -->
-                    <div class="text-center mb-4">
-                        <h2 class="fw-bold text-primary mb-1"><?= html_escape($event->title) ?></h2>
-                        <p class="text-muted">
-                            <?= html_escape($event->venue) ?> —
+                    <div class="mb-4">
+                        <h2 class="fw-bold text-primary mb-1 text-center"><?= html_escape($event->title) ?></h2>
+                        <p class="text-muted text-center">
+                            <?= html_escape($event->venue) ?> -
                             <?= date('d M Y H:i', strtotime($event->start_at)) ?>
                         </p>
-                        <p><?= nl2br(html_escape($event->description)) ?></p>
+
+                        <p class="text-justify">
+                            <?= nl2br(html_escape($event->description)) ?>
+                        </p>
 
                         <!-- 🔙 Tombol Kembali -->
                         <a href="<?= site_url('event/' . $event->event_code) ?>" class="btn btn-outline-secondary btn-sm px-3 mt-2 shadow-sm">

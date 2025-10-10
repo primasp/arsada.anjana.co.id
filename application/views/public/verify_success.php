@@ -2,7 +2,7 @@
     <div class="container text-center">
         <div class="card shadow-lg border-0 mx-auto" style="max-width:700px;">
             <div class="card-body p-5">
-                <img src="<?= base_url('assets/img/logo-arsada.png') ?>" height="70" class="mb-3">
+                <img src="<?= base_url('assets/img/logo-arsada.jpg') ?>" height="70" class="mb-3">
                 <h3 class="fw-bold text-primary mb-3">ARSADA EVENT SYSTEM</h3>
 
                 <?php if ($success) : ?>
