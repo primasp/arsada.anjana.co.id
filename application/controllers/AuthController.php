@@ -17,6 +17,8 @@ class AuthController extends CI_Controller
 
     public function index()
     {
+        // return var_dump("qwq");
+        // die;
         $this->form_validation->set_rules('userIdTxt', 'User Name', 'required');
         $this->form_validation->set_rules('passwordTxt', 'Password', 'required');
 

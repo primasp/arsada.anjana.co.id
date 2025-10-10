@@ -129,7 +129,7 @@
                         </div>
                     </form>
 
-                    <script>
+                    <!-- <script>
                         // === Signature Pad (Digital Tanda Tangan) ===
                         const canvas = document.getElementById('signature-pad');
                         const ctx = canvas.getContext('2d');
@@ -158,7 +158,96 @@
                         document.getElementById('clear-signature').addEventListener('click', function() {
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
                         });
+                    </script> -->
+
+
+                    <script>
+                        // === Signature Pad Fix Precision ===
+                        const canvas = document.getElementById('signature-pad');
+                        const ctx = canvas.getContext('2d');
+                        let drawing = false;
+
+                        // === Atur scaling untuk layar HiDPI (supaya tidak blur) ===
+                        function resizeCanvas() {
+                            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                            const rect = canvas.getBoundingClientRect();
+                            canvas.width = rect.width * ratio;
+                            canvas.height = rect.height * ratio;
+                            ctx.scale(ratio, ratio);
+                        }
+                        resizeCanvas();
+                        window.addEventListener('resize', resizeCanvas);
+
+                        // === Konversi posisi mouse agar akurat ===
+                        function getPosition(event) {
+                            const rect = canvas.getBoundingClientRect();
+                            return {
+                                x: event.clientX - rect.left,
+                                y: event.clientY - rect.top
+                            };
+                        }
+
+                        // === Event Mouse ===
+                        canvas.addEventListener('mousedown', e => {
+                            drawing = true;
+                            ctx.beginPath();
+                            const pos = getPosition(e);
+                            ctx.moveTo(pos.x, pos.y);
+                        });
+
+                        canvas.addEventListener('mouseup', () => (drawing = false));
+
+                        canvas.addEventListener('mousemove', e => {
+                            if (!drawing) return;
+                            const pos = getPosition(e);
+                            ctx.lineWidth = 2;
+                            ctx.lineCap = 'round';
+                            ctx.strokeStyle = '#000';
+                            ctx.lineTo(pos.x, pos.y);
+                            ctx.stroke();
+                        });
+
+                        // === Event Touch (mobile support) ===
+                        canvas.addEventListener('touchstart', e => {
+                            e.preventDefault();
+                            drawing = true;
+                            const touch = e.touches[0];
+                            const pos = getPosition(touch);
+                            ctx.beginPath();
+                            ctx.moveTo(pos.x, pos.y);
+                        });
+
+                        canvas.addEventListener('touchend', e => {
+                            e.preventDefault();
+                            drawing = false;
+                        });
+
+                        canvas.addEventListener('touchmove', e => {
+                            e.preventDefault();
+                            if (!drawing) return;
+                            const touch = e.touches[0];
+                            const pos = getPosition(touch);
+                            ctx.lineWidth = 2;
+                            ctx.lineCap = 'round';
+                            ctx.strokeStyle = '#000';
+                            ctx.lineTo(pos.x, pos.y);
+                            ctx.stroke();
+                        });
+
+                        // === Simpan tanda tangan ke Base64 sebelum submit ===
+                        const form = document.querySelector('form[action$="confirm-manual"]');
+                        form.addEventListener('submit', function() {
+                            document.getElementById('signature-data').value = canvas.toDataURL('image/png');
+                        });
+
+                        // === Tombol hapus tanda tangan ===
+                        document.getElementById('clear-signature').addEventListener('click', function() {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        });
                     </script>
+
+
+
                 <?php endif; ?>
             </div>
         </div>
